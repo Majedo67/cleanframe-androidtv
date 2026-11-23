@@ -33,15 +33,15 @@ jobs:
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: cleanframe-v3-apk
+          name: cleanframe-v4-apk
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
 
-      - name: Publish CleanFrame v3 release
+      - name: Publish CleanFrame v4 release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v3
-          name: CleanFrame v3
-          body: CleanFrame Android TV version 3.0 debug APK.
+          tag_name: v4
+          name: CleanFrame v4
+          body: CleanFrame Android TV version 4.0 debug APK.
           files: app/build/outputs/apk/debug/*.apk
           fail_on_unmatched_files: true
