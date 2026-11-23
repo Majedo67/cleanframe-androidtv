@@ -26,8 +26,7 @@ public class TvInputHelper {
             if (manager != null) {
                 for (TvInputInfo input : manager.getTvInputList()) {
                     String label = String.valueOf(input.loadLabel(context)).toLowerCase();
-                    if (label.contains("hdmi") && (label.contains(String.valueOf(number))
-                            || label.contains(number == 1 ? "one" : "___never___"))) {
+                    if (label.contains("hdmi " + number) || label.contains("hdmi" + number)) {
                         switchToInput(context, input.getId(), "HDMI " + number);
                         return;
                     }
