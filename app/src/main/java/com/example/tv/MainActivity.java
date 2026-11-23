@@ -1,6 +1,7 @@
 package com.example.tv;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -156,9 +157,12 @@ public class MainActivity extends Activity {
 
         @JavascriptInterface
         public void openHdmi(String port) {
-            runOnUiThread(() -> {
-                TvInputHelper.switchToInput(MainActivity.this, TvInputHelper.INPUT_HDMI1, "PlayStation 5");
-            });
+            runOnUiThread(() -> TvInputHelper.switchToInputNumber(MainActivity.this, port));
+        }
+
+        @JavascriptInterface
+        public void openHdmiMenu() {
+            runOnUiThread(() -> showHdmiMenu());
         }
 
         @JavascriptInterface
@@ -259,8 +263,8 @@ public class MainActivity extends Activity {
 
     private void handleLaunch(String target) {
         Log.d(TAG, "handleLaunch triggered with target: " + target);
-        if ("input_hdmi1".equalsIgnoreCase(target) || "playstation".equalsIgnoreCase(target)) {
-            TvInputHelper.switchToInput(this, TvInputHelper.INPUT_HDMI1, "PlayStation 5");
+        if ("input_hdmi_menu".equalsIgnoreCase(target) || "hdmi".equalsIgnoreCase(target)) {
+            showHdmiMenu();
             return;
         }
 
@@ -289,6 +293,16 @@ public class MainActivity extends Activity {
             Log.d(TAG, "App is not installed, redirecting to Play Store for: " + pkg);
             redirectToPlayStore(pkg);
         }
+    }
+
+    private void showHdmiMenu() {
+        String[] ports = {"HDMI 1", "HDMI 2", "HDMI 3", "HDMI 4"};
+        new AlertDialog.Builder(this)
+                .setTitle("HDMI")
+                .setItems(ports, (dialog, which) ->
+                        TvInputHelper.switchToInputNumber(this, String.valueOf(which + 1)))
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 
     private void redirectToPlayStore(String packageName) {
