@@ -16,7 +16,7 @@
   var PRIMARY_APPS = [
     { id: 'netflix', name: 'Netflix', mark: true, appId: 'com.netflix.ninja' },
     { id: 'youtube', name: 'YouTube', mark: true, appId: 'com.google.android.youtube.tv' },
-    { id: 'playstation', name: 'PlayStation 5', mark: true, appId: 'input_hdmi1' },
+    { id: 'hdmi', name: 'HDMI', mark: false, appId: 'input_hdmi_menu' },
     { id: 'spotify', name: 'Spotify', mark: true, appId: 'com.spotify.tv.android' },
     { id: 'disneyplus', name: 'Disney+', mark: true, appId: 'com.disney.disneyplus' },
     { id: 'stremio', name: 'Stremio', mark: true, appId: 'com.stremio.one' },
