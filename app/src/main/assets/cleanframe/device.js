@@ -7,7 +7,6 @@
     youtube: 'com.google.android.youtube.tv',
     spotify: 'com.spotify.tv.android',
     disneyplus: 'com.disney.disneyplus',
-    playstation: 'input_hdmi1',
     stremio: 'com.stremio.one',
     primevideo: 'com.amazon.amazonvideo.livingroom'
   };
@@ -17,7 +16,6 @@
     'com.google.android.youtube.tv': 'youtube',
     'com.spotify.tv.android': 'spotify',
     'com.disney.disneyplus': 'disneyplus',
-    'input_hdmi1': 'playstation',
     'com.stremio.one': 'stremio',
     'com.amazon.amazonvideo.livingroom': 'primevideo'
   };
@@ -33,8 +31,8 @@
       return;
     }
     try {
-      if (id === 'input_hdmi1' || id === 'playstation') {
-        window.AndroidBridge.openHdmi('HDMI1');
+      if (id === 'input_hdmi_menu' || id === 'hdmi') {
+        window.AndroidBridge.launch('input_hdmi_menu');
       } else {
         var targetPkg = BRAND_TO_PKG[id] || id;
         window.AndroidBridge.launch(targetPkg);
@@ -114,7 +112,6 @@
       var fallback = [
         { appId: 'com.google.android.youtube.tv', name: 'YouTube', brand: 'youtube', rank: 1 },
         { appId: 'com.netflix.ninja', name: 'Netflix', brand: 'netflix', rank: 2 },
-        { appId: 'input_hdmi1', name: 'PlayStation 5', brand: 'playstation', rank: 3 },
         { appId: 'com.spotify.tv.android', name: 'Spotify', brand: 'spotify', rank: 4 },
         { appId: 'com.disney.disneyplus', name: 'Disney+', brand: 'disneyplus', rank: 5 },
         { appId: 'com.stremio.one', name: 'Stremio', brand: 'stremio', rank: 6 },
@@ -128,15 +125,6 @@
       var raw = window.AndroidBridge.getInstalledAppsJson();
       var parsed = JSON.parse(raw);
       var result = [];
-
-      // Always prepend PlayStation 5 if not in android package manager
-      result.push({
-        appId: 'input_hdmi1',
-        name: 'PlayStation 5',
-        brand: 'playstation',
-        icon: '',
-        rank: 1
-      });
 
       if (Array.isArray(parsed)) {
         parsed.forEach(function (app, idx) {
