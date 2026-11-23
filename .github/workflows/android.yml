@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -30,9 +30,18 @@ jobs:
       - name: Build debug APK
         run: ./gradlew --no-daemon assembleDebug
 
-      - name: Upload APK
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: cleanframe-debug-apk
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+
+      - name: Publish CleanFrame v2 release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v2
+          name: CleanFrame v2
+          body: CleanFrame Android TV debug APK build.
+          files: app/build/outputs/apk/debug/*.apk
+          fail_on_unmatched_files: true
